@@ -8,7 +8,7 @@ faceRecognizer.read(os.getcwd()+'\\AlRecognizer\\training.yml')
 
 name = {0:'Unknown',1:'Dhoni'}
 
-def live():
+def AlRecognizer():
     cap = cv2.VideoCapture(0)
     i = 0
     a = 0
