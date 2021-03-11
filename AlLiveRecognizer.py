@@ -3,9 +3,10 @@ import os
 import numpy as np
 import AlFaceRecognition as afr
 
-faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
-faceRecognizer.read(os.getcwd()+'\\AlRecognizer\\training.yml')
+cwd = os.path.dirname(os.path.realpath(__file__))
 
+faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
+faceRecognizer.read(os.path.join(cwd+'\AlRecognizer','training.yml'))
 name = {0:'Unknown',1:'Dhoni'}
 
 cap = cv2.VideoCapture(0)

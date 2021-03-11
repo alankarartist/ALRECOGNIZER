@@ -2,9 +2,11 @@ import cv2
 import os
 import numpy as np
 
+cwd = os.path.dirname(os.path.realpath(__file__))
+
 def faceDetection(testImg):
     grayImg = cv2.cvtColor(testImg,cv2.COLOR_BGR2GRAY)
-    faceHaarCascade = cv2.CascadeClassifier(os.getcwd()+'\\AlRecognizer\\HaarCascade\\haarcascade_frontalface_default.xml')
+    faceHaarCascade = cv2.CascadeClassifier(os.path.join(cwd+'\AlRecognizer\HaarCascade','haarcascade_frontalface_default.xml'))
     faces = faceHaarCascade.detectMultiScale(grayImg,scaleFactor=1.32,minNeighbors=5)
     return faces,grayImg
 

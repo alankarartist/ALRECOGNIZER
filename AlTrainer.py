@@ -3,17 +3,19 @@ import os
 import numpy as np 
 import AlFaceRecognition as afr 
 
-testImg = cv2.imread(os.getcwd()+'\\AlRecognizer\\TestImages\\Dhoni.png')
+cwd = os.path.dirname(os.path.realpath(__file__))
+
+testImg = cv2.imread(os.path.join(cwd+'\\AlRecognizer\\TestImages','Dhoni.png'))
 facesDetected,grayImg = afr.faceDetection(testImg)
 
 print("faceDetected: ",facesDetected)
 
-faces,faceID = afr.labelsForTraining(os.getcwd()+'\\AlRecognizer\\TrainingImages')
+faces,faceID = afr.labelsForTraining(cwd+'\\AlRecognizer\\TrainingImages')
 faceRecognizer = afr.trainClassifier(faces,faceID)
-faceRecognizer.write(os.getcwd()+'\\AlRecognizer\\training.yml')
+faceRecognizer.write(cwd+'\\AlRecognizer\\training.yml')
 
 faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
-faceRecognizer.read(os.getcwd()+'\\AlRecognizer\\training.yml')
+faceRecognizer.read(cwd+'\\AlRecognizer\\training.yml')
 
 name = {0:'Unknown',1:'Dhoni'}
 
