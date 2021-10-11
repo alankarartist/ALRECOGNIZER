@@ -22,3 +22,9 @@ pip install opencv_contrib_python
 3. Run AlTrainer.py, before running change line 6 for test image and line 18 to classify the faces. At last, test image will be shown with person's name as shown in first image.
 4. Then, change line 9 in AlLiveRecognizer.py and run the script to identify the face on live feed, as shown in second image.
 5. You can ignore or also delete AlRecognizer.py.
+
+## Contributor
+
+<a href="https://github.com/alankarartist/ALRECOGNIZER/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=alankarartist/ALRECOGNIZER" />
+</a>
