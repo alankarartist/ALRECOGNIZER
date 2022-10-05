@@ -2,20 +2,31 @@ import cv2
 import os
 import numpy as np 
 import AlFaceRecognition as afr 
+import platform
 
 cwd = os.path.dirname(os.path.realpath(__file__))
+systemName = platform.system()
 
-testImg = cv2.imread(os.path.join(cwd+'\\AlRecognizer\\TestImages','Dhoni.png'))
+ipath = os.path.join(cwd+'\\AlRecognizer\\TestImages','Dhoni.png')
+if systemName == 'Darwin':
+    ipath = ipath.replace('\\','/')
+testImg = cv2.imread(ipath)
 facesDetected,grayImg = afr.faceDetection(testImg)
 
 print("faceDetected: ",facesDetected)
 
-faces,faceID = afr.labelsForTraining(cwd+'\\AlRecognizer\\TrainingImages')
+tpath = cwd+'\\AlRecognizer\\TrainingImages'
+if systemName == 'Darwin':
+    tpath = tpath.replace('\\','/')
+faces,faceID = afr.labelsForTraining(tpath)
 faceRecognizer = afr.trainClassifier(faces,faceID)
-faceRecognizer.write(cwd+'\\AlRecognizer\\training.yml')
+ypath = cwd+'\\AlRecognizer\\training.yml'
+if systemName == 'Darwin':
+    ypath = ypath.replace('\\','/')
+faceRecognizer.write(ypath)
 
 faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
-faceRecognizer.read(cwd+'\\AlRecognizer\\training.yml')
+faceRecognizer.read(ypath)
 
 name = {0:'Unknown',1:'Dhoni'}
 

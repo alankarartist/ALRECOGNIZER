@@ -2,11 +2,16 @@ import cv2
 import os
 import numpy as np
 import AlFaceRecognition as afr
+import platform
 
 cwd = os.path.dirname(os.path.realpath(__file__))
+systemName = platform.system()
 
 faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
-faceRecognizer.read(os.path.join(cwd+'\AlRecognizer','training.yml'))
+tpath = os.path.join(cwd+'\AlRecognizer','training.yml')
+if systemName == 'Darwin':
+    tpath = tpath.replace('\\','/')
+faceRecognizer.read(tpath)
 name = {0:'Unknown',1:'Dhoni'}
 
 cap = cv2.VideoCapture(0)
@@ -26,7 +31,7 @@ while True:
         print(confidence,label)
         afr.drawRect(testImg,face)
         predictedName = name[label]
-        if confidence<60:
+        if confidence>70:
             afr.putText(testImg,predictedName,x,y)
 
     resizedImg = cv2.resize(testImg,(1000,700))

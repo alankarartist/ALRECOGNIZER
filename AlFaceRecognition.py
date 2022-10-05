@@ -1,25 +1,32 @@
 import cv2
 import os
 import numpy as np
+import platform
 
 cwd = os.path.dirname(os.path.realpath(__file__))
+systemName = platform.system()
 
 def faceDetection(testImg):
     grayImg = cv2.cvtColor(testImg,cv2.COLOR_BGR2GRAY)
-    faceHaarCascade = cv2.CascadeClassifier(os.path.join(cwd+'\AlRecognizer\HaarCascade','haarcascade_frontalface_default.xml'))
+    xpath = os.path.join(cwd+'\AlRecognizer\HaarCascade','haarcascade_frontalface_default.xml')
+    if systemName == 'Darwin':
+        xpath = xpath.replace('\\','/')
+    faceHaarCascade = cv2.CascadeClassifier(xpath)
     faces = faceHaarCascade.detectMultiScale(grayImg,scaleFactor=1.32,minNeighbors=5)
     return faces,grayImg
 
 def labelsForTraining(directory):
     faces = []
     faceID = []
-    for path,subDirName,fileNames in os.walk(directory):
+    for path,_,fileNames in os.walk(directory):
         for fileName in fileNames:
             if fileName.startswith("."):
                 print("Skipping system file")
                 continue
             id = os.path.basename(path)
             imgPath = os.path.join(path,fileName)
+            if systemName == 'Darwin':
+                imgPath = imgPath.replace('\\','/')
             print('imgPath: ',imgPath)
             print('id: ',id)
             testImg = cv2.imread(imgPath)
