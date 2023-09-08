@@ -2,15 +2,11 @@ import cv2
 import os
 import numpy as np
 import AlFaceRecognition as afr
-import platform
 
 cwd = os.path.dirname(os.path.realpath(__file__))
-systemName = platform.system()
 
 faceRecognizer = cv2.face.LBPHFaceRecognizer_create()
 tpath = os.path.join(cwd+'\AlRecognizer','training.yml')
-if systemName == 'Darwin':
-    tpath = tpath.replace('\\','/')
 faceRecognizer.read(tpath)
 name = {0:'Unknown',1:'Dhoni'}
 
